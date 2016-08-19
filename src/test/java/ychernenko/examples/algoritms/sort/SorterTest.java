@@ -14,15 +14,17 @@ public class SorterTest {
     private final List<Integer> items = Stream.generate(() -> (int)(Math.random() * size)).limit(size).collect(toList());
     private final List<Integer> expected = items.stream().sorted().collect(toList());
 
-    @Test
-    public void testQuickSort() {
-        Sorter<Integer> sorter = new QuickSorter<>();
+    private void test(Sorter<Integer> sorter) {
         assertEquals(expected, sorter.sort(items));
     }
 
     @Test
+    public void testQuickSort() {
+        test(new QuickSorter<>());
+    }
+
+    @Test
     public void testMergeSort() {
-        Sorter<Integer> sorter = new MergeSorter<>();
-        assertEquals(expected, sorter.sort(items));
+        test(new MergeSorter<>());
     }
 }
