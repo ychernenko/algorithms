@@ -6,7 +6,7 @@ public class QuickSorter<T extends Comparable<T>> implements Sorter<T> {
 
     public List<T> sort(List<T> items) {
         List<T> result = new ArrayList<>(items.size());
-        Stack<List<T>> stack = new Stack<>();
+        Deque<List<T>> stack = new ArrayDeque<>();
         stack.push(items);
         while (!stack.isEmpty()) {
             List<T> subList = stack.pop();
