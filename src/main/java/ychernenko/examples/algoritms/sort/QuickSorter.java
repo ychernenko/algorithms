@@ -6,9 +6,10 @@ public class QuickSorter<T extends Comparable<T>> implements Sorter<T> {
 
     public List<T> sort(List<T> items) {
         List<T> result = new ArrayList<>(items.size());
-        List<T> subList = items;
         Stack<List<T>> stack = new Stack<>();
-        while (subList != null) {
+        stack.push(items);
+        while (!stack.isEmpty()) {
+            List<T> subList = stack.pop();
             if (subList.size() == 1) {
                 result.addAll(subList);
             } else {
@@ -24,7 +25,6 @@ public class QuickSorter<T extends Comparable<T>> implements Sorter<T> {
                     stack.push(left);
                 }
             }
-            subList = stack.isEmpty() ? null : stack.pop();
         }
         return result;
     }
