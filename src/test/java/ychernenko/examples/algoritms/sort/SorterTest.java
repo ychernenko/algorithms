@@ -11,7 +11,7 @@ import org.junit.Test;
 
 public class SorterTest {
 
-    private final int size = 10000;
+    private final int size = 1000000;
     private final List<Integer> items = Stream.generate(() -> (int)(Math.random() * size)).limit(size).collect(toList());
     private final List<Integer> expected = items.stream().sorted().collect(toList());
 

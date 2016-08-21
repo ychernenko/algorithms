@@ -34,22 +34,31 @@ public class HeapSorter<T extends Comparable<T>> implements Sorter<T> {
             return items.size();
         }
 
-        public void siftDown(Integer root) {
+        public void siftDown(int root) {
             if (isEmpty()) {
                 return;
             }
             Deque<Integer> deque = new ArrayDeque<>();
             deque.add(root);
             while (!deque.isEmpty()) {
-                Integer current = deque.poll();
-                for (int i = 0; i < 2; i++) {
-                    int child = getLeftChild(current) + i;
-                    if (items.size() > child && items.get(child).compareTo(items.get(current)) > 0) {
-                        swapValues(child, current);
-                        deque.add(child);
-                    }
+                int current = deque.poll();
+                Integer childToSwap = selectMaxChild(current);
+                if (childToSwap != null && items.get(childToSwap).compareTo(items.get(current)) > 0) {
+                    swapValues(childToSwap, current);
+                    deque.add(childToSwap);
                 }
             }
+        }
+
+        private Integer selectMaxChild(int root) {
+            int leftChild = 2 * root + 1;
+            if (items.size() > leftChild) {
+                T leftValue = items.get(leftChild);
+                int rightChild = leftChild + 1;
+                T rightValue = items.size() > rightChild ? items.get(rightChild) : null;
+                return rightValue == null || leftValue.compareTo(rightValue) > 0 ? leftChild : rightChild;
+            }
+            return null;
         }
 
         public T popTail() {
@@ -58,17 +67,13 @@ public class HeapSorter<T extends Comparable<T>> implements Sorter<T> {
 
         public void heapify() {
             int leafsStart = items.size() / 2;
-            for (Integer i = leafsStart; i >= 0; i--) {
+            for (int i = leafsStart; i >= 0; i--) {
                 siftDown(i);
             }
         }
 
 
-        public int getLeftChild(int i) {
-            return 2 * i + 1;
-        }
-
-        public void swapValues(Integer first, Integer second) {
+        public void swapValues(int first, int second) {
             T firstValue = items.get(first);
             items.set(first, items.get(second));
             items.set(second, firstValue);
