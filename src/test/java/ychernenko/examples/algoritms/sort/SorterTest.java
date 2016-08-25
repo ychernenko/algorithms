@@ -33,4 +33,9 @@ public class SorterTest {
     public void testHeapSort() {
         test(new HeapSorter<>());
     }
+
+    @Test
+    public void testAVLSort() {
+        test(new AVLSorter<>());
+    }
 }
